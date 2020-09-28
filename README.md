@@ -1,5 +1,5 @@
 # prom2timescale
-migrate historical data from Prometheus to TimescaleDB
+Migrate historical data from Prometheus to TimescaleDB
 
 ## Installation
 
@@ -18,7 +18,17 @@ $ prom2timescale -h
 ## Example
 
 ```
-$ prom2timescale -snapshot-path=/path/to/prometheus-snapshot-dir/ -label-key="__name__" -label-value="up" -db-name=PROM_TS_DB_NAME -db-host=PROM_TS_DB_HOST -db-user=PROM_TS_DB_USER -db-password=PROM_TS_DB_PASSWORD
+$ curl -XPOST http://localhost:9090/api/v1/admin/tsdb/snapshot
+{"status":"success","data":{"name":"20200928T034434Z-23ba198f9608ec46"}}
+
+$ prom2timescale \
+    -snapshot-path=/path/to/snapshots/20200928T034434Z-23ba198f9608ec46 \
+    -label-key="__name__" \
+    -label-value="up" \
+    -db-name=PROM_TS_DB_NAME \
+    -db-host=PROM_TS_DB_HOST \
+    -db-user=PROM_TS_DB_USER \
+    -db-password=PROM_TS_DB_PASSWORD
 ```
 
 ## Credits
